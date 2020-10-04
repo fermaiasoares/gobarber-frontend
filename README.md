@@ -1,44 +1,71 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Recuperação de Senha
 
-## Available Scripts
+**RF (Requisitos Funcionais)**
 
-In the project directory, you can run:
+- O usuário deve poder recuperar sua senha informando o seu e-mail;
+- O usuário deve receber um e-mail com instruções de recuperação de senha;
+- O usuário deve poder resetar sua senha;
 
-### `yarn start`
+**RNF (Requisitos Não Funcionais)**
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Utilizar Mailtrap para testar envios em ambiente de desenvolvimento;
+- Utilizar Amazons SES para envios em produção;
+- O envio de e-mail deve acontecer em segundo plano (background job);
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+**RN (Regra de Negócio)**
 
-### `yarn test`
+- O link enviado por e-mail para resetar senha deve expirar em duas horas;
+- O usuário precisa confirmar a nova senha ao resetar a senha;
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Atualização do Perfil
 
-### `yarn build`
+**RF**
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- O usuário deve poder atualizar seu perfil, nome, email e senha;
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+**RNF**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**RN**
 
-### `yarn eject`
+- Usuário não pode alterar seu e-mail para um e-mail já utilizado;
+- Para atualizar sua senha, o usuário deve informar a senha antiga;
+- Para atualizar sua senha, o usuário deve confirmar sua nova senha;
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# Painel do Prestador
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**RF**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- O usuário deve poder listar seus agendamentos de um dia específico;
+- O prestador deve receber uma notificação sempre que houver um novo agendamento;
+- O prestador deve poder visualizar as notificações não lidas;
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+**RNF**
 
-## Learn More
+- Os agendamento do prestador no dia devem ser armazenados em cache;
+- As notificações do prestador devem ser armazenadas no MongoDB;
+- As notificações do prestador devem ser enviadas em tempo-real utilizando Socket.io;
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**RN**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- A notificação deve ter um status de lida ou não-lida para que o prestador possa controlar;
+
+# Agendamento de Serviços
+
+**RF**
+
+- O usuário deve poder listar todos os prestadores de serviço cadastrados;
+- O usuário deve poder listar os dias de um mês com pelo menos um horário disponível de um prestador;
+- O usuário deve poder listar os horários disponíveis em um dia específico de um prestador;
+- O usuário deve poder realizar um novo agendamento com um prestador;
+
+**RNF**
+
+- Listagem de prestadores devem ser armazenado em cache;
+
+**RN**
+
+- Cada agendamento deve durar 1 hora exatamente;
+- Os agendamentos devem estar disponíveis entre 8h as 18h (Primeiro às 08 e o ultimo as 17h)
+- O usuário não pode agendar em um horario já ocupado
+- O usuário não pode agendar um horario que já passou
+- O usuário não pode agendar um serviço consigo mesmo
